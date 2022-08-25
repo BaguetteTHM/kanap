@@ -3,6 +3,10 @@
 //Récupère le container des articles à afficher et le panier du LS
 let cart__items = document.getElementById("cart__items");
 
+// Valeur par default dela quantité total et du prix total
+let cartTotalItems = 0;
+let cartTotalPrice = 0;
+
 
 // Fetch les info d'un produit en fonction de son id
 async function recuperationSpecs(id){
@@ -18,8 +22,29 @@ async function recuperationSpecs(id){
   
 }
 
+//Récupère les span totalQuantity et totalPrice
+let totalQuantity = document.querySelector('#totalQuantity');
+let totalPrice = document.querySelector('#totalPrice');
+
+
+async function changeTotalDOM(localStorage){
+    cartTotalItems = 0;
+    cartTotalPrice = 0;
+    for(let i=0;i<localStorage.length;i=i+1){
+        const specProduit = await recuperationSpecs(localStorage[i].id);
+
+        cartTotalItems += parseInt(localStorage[i].chosenQuantity);
+        cartTotalPrice += specProduit.price * parseInt(localStorage[i].chosenQuantity);
+
+    }
+    totalQuantity.innerHTML = cartTotalItems;
+    totalPrice.innerHTML = cartTotalPrice;
+
+}
+
+
 // listener sur les boutons de suppression et de changement de quantité,call des fonctions du LS au click
-function deleteElements(){
+async function deleteElements(){
 
     let deleteBtns = document.getElementsByClassName("deleteItem");
 
@@ -35,9 +60,9 @@ function deleteElements(){
                 color : deleteBtncolor
             }
             article.remove();
-
-
             supprimeProduit(supProduit);
+            changeTotalDOM(getBasket());
+
                                             
             
 
@@ -45,7 +70,8 @@ function deleteElements(){
     })
 }
 
-function changeQuantity(){
+
+async function changeQuantity(){
     
     let changequantityBtns = document.getElementsByClassName("itemQuantity");
 
@@ -58,6 +84,7 @@ function changeQuantity(){
             let newQuantity = changeQuantityBtn.value;
 
             changeQuantité(changeQuantityBtnID,changeQuantityBtnColor,newQuantity);
+            changeTotalDOM(getBasket());
 
         })
         
@@ -70,13 +97,7 @@ function changeQuantity(){
 
 }
 
-//Récupère les span totalQuantity et totalPrice
-let totalQuantity = document.querySelector('#totalQuantity');
-let totalPrice = document.querySelector('#totalPrice');
 
-// Valeur par default dela quantité total et du prix total
-let cartTotalItems = 0;
-let cartTotalPrice = 0;
 
 //Pour chaque produit, await fecth de l'id puis affiche ses infos et modifie les valeurs cartTotalPrice/Items
 async function affichagePanier() {
