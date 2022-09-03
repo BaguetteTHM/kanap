@@ -19,7 +19,7 @@ async function recuperationProduit(){
   
 }
 
-//Affiche les valeurs associé à ce produit/objet
+//Affiche les valeurs associées à ce produit/objet
 
 async function affichageProduit(){
     const produit = await recuperationProduit();

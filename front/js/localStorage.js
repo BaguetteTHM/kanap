@@ -35,7 +35,7 @@ function addBasket(product){
 
 //Supprimer un produit du panier dans le LS
 
-function supprimeProduit(product){
+function deleteBasketProduct(product){
     let basket = getBasket();
     basket = basket.filter (p => p.id != product.id || p.chosenColor != product.color)
     saveBasket(basket);
@@ -43,7 +43,7 @@ function supprimeProduit(product){
 
 //Changer la quantité d'un produit du panier dans le LS
 
-function changeQuantité(id,color,qty){
+function changeBasketQty(id,color,qty){
     let basket = getBasket();
     let changedProduct = basket.filter (p => p.id === id && p.chosenColor === color )
     if( changedProduct.length > 0 ){

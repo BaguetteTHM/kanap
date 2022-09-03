@@ -27,6 +27,7 @@ let totalQuantity = document.querySelector('#totalQuantity');
 let totalPrice = document.querySelector('#totalPrice');
 
 
+//Modifie l'affichage du nombre total d'articles et du prix total dans le DOM
 async function changeTotalDOM(localStorage){
     cartTotalItems = 0;
     cartTotalPrice = 0;
@@ -60,7 +61,7 @@ async function deleteElements(){
                 color : deleteBtncolor
             }
             article.remove();
-            supprimeProduit(supProduit);
+            deleteBasketProduct(supProduit);
             changeTotalDOM(getBasket());
 
                                             
@@ -83,7 +84,7 @@ async function changeQuantity(){
             let changeQuantityBtnColor = article.getAttribute("data-color");
             let newQuantity = changeQuantityBtn.value;
 
-            changeQuantité(changeQuantityBtnID,changeQuantityBtnColor,newQuantity);
+            changeBasketQty(changeQuantityBtnID,changeQuantityBtnColor,newQuantity);
             changeTotalDOM(getBasket());
 
         })
@@ -276,7 +277,7 @@ function validationEmail(vEmail){
     return testEmail;
 }
 
-//On déclare les variable des tests pour la vérification finale des données avec une valeur false par default
+//On déclare les variables des tests pour la vérification finale des données avec une valeur false par default
 
 let testValidationFirstName = false;
 let testValidationLastName = false;
@@ -365,7 +366,7 @@ orderBtn.addEventListener("click", e => {
     
     if(firstName.value === "" || lastName.value === "" || address.value === "" || email.value === "" || city.value === ""){
         alert("Veuillez remplir le formulaire svp");
-    }else if (testValidationFirstName== false || testValidationLastName == false || testValidationAdress == false ||testValidationCity == false || testValidationEmail == false ){
+    }else if (testValidationFirstName == false || testValidationLastName == false || testValidationAdress == false ||testValidationCity == false || testValidationEmail == false ){
         alert("Veuillez vérifier les champs de formulaire svp");
 
     }else if(testPanier == false){
